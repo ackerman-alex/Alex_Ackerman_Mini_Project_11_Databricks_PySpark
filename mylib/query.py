@@ -1,9 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, FloatType
-from pyspark.sql.functions import when  # Import when for conditional updates
-
-# Initialize Spark session
-spark = SparkSession.builder.appName("SpotifyDBOperations").getOrCreate()
+from pyspark.sql.functions import when
 
 # Define schema for the SpotifyDB table
 schema = StructType([
@@ -34,46 +31,42 @@ schema = StructType([
     StructField("speechiness_percent", FloatType(), True)
 ])
 
-# Initialize an empty DataFrame for SpotifyDB
-spotify_df = spark.createDataFrame([], schema)
+# Initialize a DataFrame placeholder (global variable)
+spotify_df = None
 
 # Function to insert a new record
-def query_create():
+def query_create(spark):
+    global spotify_df
+    if spotify_df is None:
+        spotify_df = spark.createDataFrame([], schema)
+    
     new_data = [(12345, "Sample Track", "Sample Artist", 3, 2023, 8, 15, 100, 50, 50000000, 
                  200, 180, 150, 100, 50, 120, "A", "Minor", 80.5, 70.4, 90.2, 12.3, 0.0, 15.6, 5.8)]
     new_record_df = spark.createDataFrame(new_data, schema)
     
-    global spotify_df
     spotify_df = spotify_df.union(new_record_df)
     return "Create Success"
 
-# Function to read records with a limit
-def query_read(limit=5):
+# Function to read records
+def query_read(spark, limit=5):
     global spotify_df
-    spotify_df.show(limit)
+    if spotify_df is not None:
+        spotify_df.show(limit)
     return "Read Success"
 
 # Function to update a specific record
-def query_update(record_id=12345, new_artist_name="Updated Artist"):
+def query_update(spark, record_id=12345, new_artist_name="Updated Artist"):
     global spotify_df
-    spotify_df = spotify_df.withColumn(
-        "artist_name",
-        when(spotify_df.music_id == record_id, new_artist_name).otherwise(spotify_df.artist_name)
-    )
+    if spotify_df is not None:
+        spotify_df = spotify_df.withColumn(
+            "artist_name",
+            when(spotify_df.music_id == record_id, new_artist_name).otherwise(spotify_df.artist_name)
+        )
     return "Update Success"
 
 # Function to delete a specific record
-def query_delete(record_id=12345):
+def query_delete(spark, record_id=12345):
     global spotify_df
-    spotify_df = spotify_df.filter(spotify_df.music_id != record_id)
+    if spotify_df is not None:
+        spotify_df = spotify_df.filter(spotify_df.music_id != record_id)
     return "Delete Success"
-
-# Test the functions
-if __name__ == "__main__":
-    print(query_create())    # Insert a new record
-    print(query_read())      # Read records
-    print(query_update())    # Update a record
-    print(query_delete())    # Delete a record
-
-# Stop the Spark session
-spark.stop()
