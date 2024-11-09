@@ -1,3 +1,7 @@
+'''
+    Query
+'''
+
 # Import necessary libraries
 from pyspark.sql.types import (
     StructType,

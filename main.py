@@ -1,3 +1,7 @@
+'''
+    Main
+'''
+
 from mylib.extract import extract
 from mylib.transform_load import transform, load
 from mylib.query import SpotifyDataFrameManager  # Import the class
