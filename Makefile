@@ -22,6 +22,9 @@ lint:
 container-lint:
 	docker run --rm -i hadolint/hadolint < Dockerfile
 
+deploy:
+	# Place deploy statement
+
 refactor: format lint
 
 all: install lint test format 
