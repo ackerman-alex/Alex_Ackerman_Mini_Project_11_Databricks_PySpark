@@ -25,5 +25,19 @@ if __name__ == "__main__":
     assert results["read"] == "Read Success", "Read operation failed"
     assert results["update"] == "Update Success", "Update operation failed"
     assert results["delete"] == "Delete Success", "Delete operation failed"
+    
+    # New assertions for the additional queries
+    assert results["read_by_year"] == "Read by Year Success", (
+        "Read by Year operation failed"
+    )
+    assert isinstance(
+        results["average_streams"], (int, float)
+    ), (
+        "Average streams result should be a number, "
+        f"got {type(results['average_streams'])}"
+    )
+    assert results["average_streams"] >= 0, (
+        "Average streams should be 0 or greater"
+    )
 
     print("All tests passed successfully.")

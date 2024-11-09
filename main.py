@@ -29,6 +29,12 @@ def main():
     print(manager.query_update())
     # Delete record
     print(manager.query_delete())
+    
+    # Read records by specific year (e.g., 2023)
+    print(manager.query_read_by_year(2023))
+    # Calculate average streams
+    average_streams = manager.query_average_streams()
+    print(f"Average Streams: {average_streams}")
 
     # Return main results for verification
     results = {
@@ -38,6 +44,8 @@ def main():
         "read": manager.query_read(),
         "update": manager.query_update(),
         "delete": manager.query_delete(),
+        "read_by_year": manager.query_read_by_year(2023),
+        "average_streams": average_streams,
     }
 
     # Stop the Spark session

@@ -6,7 +6,7 @@ from pyspark.sql.types import (
     StringType,
     FloatType,
 )
-from pyspark.sql.functions import when
+from pyspark.sql.functions import when, avg
 
 # Define schema for the SpotifyDB table
 schema = StructType(
@@ -97,3 +97,16 @@ class SpotifyDataFrameManager:
     def query_delete(self, record_id=12345):
         self.spotify_df = self.spotify_df.filter(self.spotify_df.music_id != record_id)
         return "Delete Success"
+
+    # New query to retrieve records by release year
+    def query_read_by_year(self, year):
+        result_df = self.spotify_df.filter(self.spotify_df.released_year == year)
+        result_df.show()
+        return "Read by Year Success"
+
+    # New query to calculate the average streams across all records
+    def query_average_streams(self):
+        avg_streams = self.spotify_df.agg(avg("streams")).first()[0]
+        # Ensure it returns a number, even if avg_streams is None
+        return avg_streams if avg_streams is not None else 0
+

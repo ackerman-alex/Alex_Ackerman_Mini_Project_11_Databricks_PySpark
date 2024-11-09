@@ -10,10 +10,6 @@ format:
 
 
 lint:
-	# pylint --load-plugins=pylint_pyspark --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
-
-	# PYTHONPATH=$(shell pwd) pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
-
 	#disable comment to test speed
 	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
 	#ruff linting is 10-100X faster than pylint
