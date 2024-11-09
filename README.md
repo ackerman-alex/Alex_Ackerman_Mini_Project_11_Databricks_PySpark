@@ -1,37 +1,21 @@
-[![CI](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml)
-## Template for Python projects with RUFF linter
-
-![1 15_rust_built_python_tools](https://github.com/nogibjj/python-ruff-template/assets/58792/db5f7bda-a977-4c67-acbe-a70fe034fbdf)
 
 
+## Alex_Ackerman_Mini_Project_10_PySpark
 
-1. First thing to do on launch is to open a new shell and verify virtualenv is sourced.
+## Purpose
 
-Things included are:
+The goal of this project was to build an Extract, Transform, Load (ETL) - Query pipeline. For this project I was required to perform Create, Read, Update, Delete (CRUD) Operations.
 
-* `Makefile`
+A visualization of the process is provided in the [sqlite-lab](https://github.com/nogibjj/sqlite-lab/tree/main) repo and can be seen below:
 
-* `Pytest`
+![Visulaization provided by sqlite-lab](ETL_w_SQLite.png)
 
-* `pandas`
+## Data
 
-* `Ruff`:  
-
-Run `make lint` which runs `ruff check`.  You can find out more info on [Ruff here](https://github.com/astral-sh/ruff).
-
-* `Dockerfile`
-
-* `GitHub copilot`
-
-* `jupyter` and `ipython` 
-
-* A base set of libraries for devops and web
-
-* `githubactions`
+The data used for this project came from [RunCHIRON](https://github.com/RunCHIRON/dataset) and contains a csv file of the top Spotify songs from 2023
 
 ## References
 
-![1 1-function-essence-of-programming](https://github.com/nogibjj/python-ruff-template/assets/58792/f7f33cd3-cff5-4014-98ea-09b6a29c7557)
+- [sqlite-lab](https://github.com/nogibjj/sqlite-lab/tree/main)
 
-
-
+- [Dataset from RunCHIRON Repo](https://github.com/RunCHIRON/dataset)
