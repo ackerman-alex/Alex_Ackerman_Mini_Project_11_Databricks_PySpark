@@ -1,6 +1,6 @@
-'''
-    Query
-'''
+"""
+    Query Module
+"""
 
 # Import necessary libraries
 from pyspark.sql.types import (
@@ -10,7 +10,7 @@ from pyspark.sql.types import (
     StringType,
     FloatType,
 )
-from pyspark.sql.functions import when, avg
+from pyspark.sql.functions import when, avg, col, count
 
 # Define schema for the SpotifyDB table
 schema = StructType(
@@ -46,12 +46,17 @@ schema = StructType(
 # Define a Spotify DataFrame Manager Class
 class SpotifyDataFrameManager:
     def __init__(self, spark_session):
-        # Store the Spark session as an instance attribute
+        """
+        Initialize the SpotifyDataFrameManager with a Spark session.
+        """
         self.spark = spark_session
-        # Initialize DataFrame placeholder
+        # Initialize DataFrame placeholder with the defined schema
         self.spotify_df = self.spark.createDataFrame([], schema)
 
     def query_create(self):
+        """
+        Create a new record in the Spotify DataFrame.
+        """
         new_data = [
             (
                 12345,
@@ -86,10 +91,16 @@ class SpotifyDataFrameManager:
         return "Create Success"
 
     def query_read(self, limit=5):
+        """
+        Read and display a limited number of records from the Spotify DataFrame.
+        """
         self.spotify_df.show(limit)
         return "Read Success"
 
     def query_update(self, record_id=12345, new_artist_name="Updated Artist"):
+        """
+        Update the artist name for a specific record by music_id.
+        """
         self.spotify_df = self.spotify_df.withColumn(
             "artist_name",
             when(self.spotify_df.music_id == record_id, new_artist_name).otherwise(
@@ -99,18 +110,84 @@ class SpotifyDataFrameManager:
         return "Update Success"
 
     def query_delete(self, record_id=12345):
+        """
+        Delete a record from the Spotify DataFrame by music_id.
+        """
         self.spotify_df = self.spotify_df.filter(self.spotify_df.music_id != record_id)
         return "Delete Success"
 
-    # New query to retrieve records by release year
     def query_read_by_year(self, year):
-        result_df = self.spotify_df.filter(self.spotify_df.released_year == year)
-        result_df.show()
-        return "Read by Year Success"
+        """
+        Retrieve records from the Spotify DataFrame by release year.
 
-    # New query to calculate the average streams across all records
+        Args:
+            year (int): The release year to filter records.
+
+        Returns:
+            str: Success message with record count.
+        """
+        result_df = self.spotify_df.filter(self.spotify_df.released_year == year)
+        record_count = result_df.count()
+        result_df.show()
+        return f"Read by Year Success: {record_count} records found"
+
     def query_average_streams(self):
+        """
+        Calculate the average streams across all records in the Spotify DataFrame.
+        """
         avg_streams = self.spotify_df.agg(avg("streams")).first()[0]
-        # Ensure it returns a number, even if avg_streams is None
         return avg_streams if avg_streams is not None else 0
 
+    def query_top_tracks(self, limit=5):
+        """
+        Retrieve the top tracks by stream count.
+
+        Args:
+            limit (int): Number of top tracks to retrieve.
+
+        Returns:
+            str: Success message with record count.
+        """
+        top_tracks_df = self.spotify_df.orderBy(col("streams").desc()).limit(limit)
+        top_tracks_df.show()
+        return f"Top {limit} tracks retrieved successfully."
+
+    def query_streams_by_artist(self, artist_name):
+        """
+        Calculate the total streams for a specific artist.
+
+        Args:
+            artist_name (str): The name of the artist.
+
+        Returns:
+            int: Total streams for the specified artist.
+        """
+        total_streams = (
+            self.spotify_df.filter(self.spotify_df.artist_name == artist_name)
+            .agg(count("streams"))
+            .first()[0]
+        )
+        return total_streams or 0
+
+
+# Example Usage in Databricks
+if __name__ == "__main__":
+    from pyspark.sql import SparkSession
+
+    # Create Spark session
+    spark = SparkSession.builder.getOrCreate()
+
+    # Initialize the Spotify DataFrame Manager
+    spotify_manager = SpotifyDataFrameManager(spark)
+
+    # Example operations
+    print(spotify_manager.query_create())  # Add a new record
+    print(spotify_manager.query_read())   # Read and display records
+    print(spotify_manager.query_update()) # Update an artist's name
+    print(spotify_manager.query_delete()) # Delete a record
+    print(spotify_manager.query_read_by_year(2023)) # Query records by year
+    print(f"Average Streams: {spotify_manager.query_average_streams()}") # Calculate average streams
+    print(spotify_manager.query_top_tracks(limit=3))  # Retrieve top 3 tracks by streams
+    print(
+        f"Total Streams for 'Sample Artist': {spotify_manager.query_streams_by_artist('Sample Artist')}"
+    )  # Total streams for a specific artist
