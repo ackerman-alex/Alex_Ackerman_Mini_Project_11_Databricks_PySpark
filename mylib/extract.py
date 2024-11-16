@@ -1,7 +1,5 @@
-'''
-    Extact
-'''
 import requests
+from pyspark.sql import SparkSession
 
 def extract(
     url="https://raw.githubusercontent.com/RunCHIRON/dataset/refs/heads/main/Spotify_2023.csv",
@@ -44,3 +42,17 @@ def load_data(file_path, spark):
     df = spark.read.csv(file_path, header=True, inferSchema=True)
     print(f"Data successfully loaded into a DataFrame with {df.count()} rows.")
     return df
+
+
+if __name__ == "__main__":
+    # Initialize Spark session
+    spark = SparkSession.builder.appName("Spotify Data").getOrCreate()
+    
+    # Extract the data
+    file_path = extract()
+    
+    # Load the data into a Spark DataFrame
+    df = load_data(file_path, spark)
+    
+    # Perform a quick preview of the data
+    df.show(5)
