@@ -1,10 +1,12 @@
-'''
+"""
     Main
-'''
-from mylib.extract import extract, load_data
+"""
+
+from mylib.extract import extract
 from mylib.transform_load import transform, load
 from mylib.query import SpotifyDataFrameManager
 from pyspark.sql import SparkSession
+
 
 def main():
     # Start a Spark session
@@ -48,6 +50,7 @@ def main():
     print("Results dictionary before returning:", results)
 
     return results
+
 
 if __name__ == "__main__":
     main()

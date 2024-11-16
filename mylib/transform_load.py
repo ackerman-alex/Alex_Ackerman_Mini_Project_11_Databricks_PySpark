@@ -1,15 +1,17 @@
-'''
+"""
     Transform-Load
-'''
+"""
 
 from pyspark.sql.functions import col, year, month, dayofmonth
 
+
 def transform(
     data_path="dbfs:/tmp/Spotify_2023.csv",  # Correct file path for Databricks DBFS
-    spark=None
+    spark=None,
 ):
     """
-    Transforms the data by renaming columns, adding date components, and calculating streams in millions.
+    Transforms the data by renaming columns, adding date components, and
+    calculating streams in millions.
     """
     if spark is None:
         raise ValueError("A Spark session must be provided.")
@@ -38,12 +40,13 @@ def transform(
 
 
 def load(
-    df, 
-    output_path="dbfs:/tmp/Spotify_Transformed.parquet",  # Correct DBFS path for Databricks
-    file_format="parquet"
+    df,
+    output_path="dbfs:/tmp/Spotify_Transformed.parquet",  # Correct DBFS path
+    file_format="parquet",
 ):
     """
-    Saves the transformed DataFrame to the specified output path in the given format.
+    Saves the transformed DataFrame to the specified output path in the given
+    format.
     """
     # Write the DataFrame in the specified format
     if file_format == "parquet":
@@ -62,6 +65,7 @@ def load(
 if __name__ == "__main__":
     # Ensure Spark session is available
     from pyspark.sql import SparkSession
+
     spark = SparkSession.builder.getOrCreate()
 
     # Path where the file is saved from the extract step

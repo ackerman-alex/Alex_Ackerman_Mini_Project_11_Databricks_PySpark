@@ -1,5 +1,5 @@
 """
-    Query Module
+Query Module
 """
 
 # Import necessary libraries
@@ -11,6 +11,7 @@ from pyspark.sql.types import (
     FloatType,
 )
 from pyspark.sql.functions import when, avg, col, count
+
 
 # Define schema for the SpotifyDB table
 schema = StructType(
@@ -42,6 +43,7 @@ schema = StructType(
         StructField("speechiness_percent", FloatType(), True),
     ]
 )
+
 
 # Define a Spotify DataFrame Manager Class
 class SpotifyDataFrameManager:
@@ -182,12 +184,13 @@ if __name__ == "__main__":
 
     # Example operations
     print(spotify_manager.query_create())  # Add a new record
-    print(spotify_manager.query_read())   # Read and display records
-    print(spotify_manager.query_update()) # Update an artist's name
-    print(spotify_manager.query_delete()) # Delete a record
-    print(spotify_manager.query_read_by_year(2023)) # Query records by year
-    print(f"Average Streams: {spotify_manager.query_average_streams()}") # Calculate average streams
-    print(spotify_manager.query_top_tracks(limit=3))  # Retrieve top 3 tracks by streams
+    print(spotify_manager.query_read())  # Read and display records
+    print(spotify_manager.query_update())  # Update an artist's name
+    print(spotify_manager.query_delete())  # Delete a record
+    print(spotify_manager.query_read_by_year(2023))  # Query records by year
+    print(f"Average Streams: {spotify_manager.query_average_streams()}")  # Avg streams
+    print(spotify_manager.query_top_tracks(limit=3))  # Top 3 tracks
     print(
-        f"Total Streams for 'Sample Artist': {spotify_manager.query_streams_by_artist('Sample Artist')}"
-    )  # Total streams for a specific artist
+        f"Total Streams for 'Sample Artist': "
+        f"{spotify_manager.query_streams_by_artist('Sample Artist')}"
+    )
