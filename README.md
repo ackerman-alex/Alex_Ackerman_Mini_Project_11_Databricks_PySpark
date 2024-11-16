@@ -1,42 +1,30 @@
-[![CI](https://github.com/nogibjj/Alex_Ackerman_Mini_Project_10_PySpark/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Alex_Ackerman_Mini_Project_10_PySpark/actions/workflows/cicd.yml)
+[![CI](https://github.com/ackerman-alex/Alex_Ackerman_Mini_Project_11_Databricks_PySpark/actions/workflows/cicd.yml/badge.svg)](https://github.com/ackerman-alex/Alex_Ackerman_Mini_Project_11_Databricks_PySpark/actions/workflows/cicd.yml)
 
-# Alex Ackerman Mini Project 10 - PySpark
-Welcome to the Alex Ackerman Mini Project 10 - PySpark repository! This project showcases the use of PySpark for managing a Spotify dataset, performing data operations, and analyzing various music-related metrics.
+# Alex Ackerman Mini Project 11 - Data Pipeline with Databricks
+This project is an expansion to [this PySpark project](https://github.com/nogibjj/Alex_Ackerman_Mini_Project_10_PySpark.git). Since PySpark is already native to the Databricks ecosystem the scripts had to be revised slightly to work.  This project showcases the creation and implementation of a Databricks Pipeline and the use of PySpark for managing a Spotify dataset, performing data operations, and analyzing various music-related metrics.
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Functions](#functions)
-5. [Dataset Schema](#dataset-schema)
-6. [Example CRUD Operations](#example-crud-operations)
-7. [Anlaysis Queries in query.py](#analysis-queries-in-query.py)
-8. [Contributing](#contributing)
-9. [License](#license)
+2. [Workflow](#workflow)
+3. [Functions](#functions)
+4. [Dataset Schema](#dataset-schema)
+5. [Example CRUD Operations](#example-crud-operations)
+6. [Anlaysis Queries in query.py](#analysis-queries-in-query.py)
+7. [Contributing](#contributing)
+8. [License](#license)
 
 ## Project Overview
-This project demonstrates how to utilize PySpark to manage and analyze music streaming data effectively. The dataset includes information about songs, artists, playlists, and streaming statistics across platforms like Spotify, Apple Music, Deezer, and Shazam. It supports basic CRUD (Create, Read, Update, Delete) operations using PySpark DataFrames, enabling efficient data processing for large datasets.
+This project demonstrates how to create a Databricks Pipeline to manage and analyze music streaming data effectively. The dataset includes information about songs, artists, playlists, and streaming statistics across platforms like Spotify, Apple Music, Deezer, and Shazam. It supports basic CRUD (Create, Read, Update, Delete) operations using PySpark DataFrames, enabling efficient data processing for large datasets.
 
-## Installation
-1. Clone the 
-```bash
-git clone https://github.com/nogibjj/Alex_Ackerman_Mini_Project_10_PySpark.git
-cd Alex_Ackerman_Mini_Project_10_PySpark
-```
-2. Install Required Packages
-    - This project requires PySpark
-```bash
-pip install pyspark
-```
-3. Set Up the Environment
-Ensure that you have a compatible environment with Spark installed. Refer to the [official Spark documentation](https://spark.apache.org/downloads.html) for system-specific setup.
+## Workflow
 
-## Usage
-1. Start PySpark in your terminal or IDE.
-2. Load the Dataset as a DataFrame by running the provided code snippets.
-3. Run CRUD Operations using the provided function definitions in the script.
+Below is an image of the workflow created in Databricks. It consists of three tasks: Extract, Transform-Load, and Query:
 
-This project enables you to explore the dataset and perform various transformations and analyses. Modify or extend the code to fit specific needs as you explore the data.
+![alt text](<Images/Tasks 2.png>)
+
+The next image shows how a successful completion of the workflow:
+
+![alt text](<Images/Databricks workflow 2.png>)
 
 ## Functions
 The project includes the following key functions for interacting with the Spotify dataset:
